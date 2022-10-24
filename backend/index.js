@@ -5,16 +5,16 @@ const routes = require("./route.js");
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 
-// log all database interactions
+// LOGGER
 const logger = (req,res,next) => {
     console.log(`Request received at: ${new Date()}`);
     next()
 }
 
-// specify routes and logger
+// ROUTES
 app.use(routes, logger);
 
-// handle errors
+// ERRORS
 app.use((err,req,res,next) => {
     console.log(err);
     res.status(err.status || 500).send(err.message || `Unknown error`);
