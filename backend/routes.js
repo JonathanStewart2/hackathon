@@ -1,23 +1,14 @@
 'use strict';
 
-const { portfolioModel, transactionModel } = require('./schema.js');
+const { portfolioModel } = require('./schema.js');
 const router = require("express").Router();
 
 // CREATE -----------------------------------------
-router.post('/addInvestment', (req,res,next) => {
-    console.log(req.body);
+router.post('/addInvestment', (req,res,next) => { 
     portfolioModel.create(req.body)
     .then(results => res.status(201).send(results))
     .catch(err => next(err))
 });
-
-router.post('addTransaction', (req,res,next) => {
-    console.log(req.body);
-    transactionModel.create(req.body)
-    .then(results => res.status(201).send(results))
-    .catch(err => next(err))
-})
-
 
 // READ -----------------------------------------
 router.get('/getPortfolio', (req,res,next) => {
@@ -34,13 +25,6 @@ router.get('/getPortfolio/:id', (req,res,next) => {
     .then(results => res.send(results))
     .catch(err => next(err))
 })
-
-router.get('/getTransactions', (req,res,next) => {
-    transactionModel.find()
-    .then(results => res.send(results))
-    .catch(err => next(err))
-})
-
 
 //UPDATE -----------------------------------------
 router.patch("/updatePortfolio/:id", async (req,res,next) => {
