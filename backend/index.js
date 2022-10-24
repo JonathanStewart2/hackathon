@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const routes = require("./routes.js");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 // LOGGER

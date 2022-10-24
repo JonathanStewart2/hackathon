@@ -1,12 +1,26 @@
 {
-    "symbol": "BTC",
+    "_id": "BTC",
     "name": "Bitcoin",
-    "investment": "0.1",
-    "transactions": [
-        {
-            "PPC": "15000",
-            "Purchased": "0.1",
-            "Date": "2022-10-01T23:00:00Z"
-        }
-    ]
+    "investment": "0.1"
+}
+{
+    "_id": "ETH",
+    "name": "Ethereum",
+    "investment": "0.5"
+}
+
+
+{
+    "_id": "1",
+    "symbol": "BTC",
+    "PPC": "16000",
+    "Purchased": "0.1",
+    "Date": "2022-10-01T23:00:00Z"
+}
+{
+    "_id": "2",
+    "symbol": "ETH",
+    "PPC": "2000",
+    "Purchased": "0.5",
+    "Date": "2022-10-01T23:00:00Z"
 }
