@@ -31,9 +31,8 @@ const portfolioHoldingsSchema = new Schema({
         Date: {
             type: Date,
             require: true
-        }]
-
-    }
+        }
+    }]
 });
 
 const portfolioModel = mongoose.model("portfolio", portfolioSchema);
