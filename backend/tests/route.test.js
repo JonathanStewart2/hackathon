@@ -16,7 +16,7 @@ describe("Portfolio Testing", () => {
             testPortfolio = await portfolioModel.create({
                 _id: "BTC",
                 name: "Bitcoin",
-                investment: 1.5
+                crypto: 1.5
             });
             testPortfolio = JSON.parse(JSON.stringify(testPortfolio));
         } catch (err) {
@@ -29,7 +29,7 @@ describe("Portfolio Testing", () => {
         const newInvestment = {
             _id: "ETH",
             name: "Ethereum",
-            investment: 0.75
+            crypto: 0.75
         }
         chai.request(server).post("/addInvestment").send(newInvestment).end((err, res) => {
             chai.expect(err).to.be.null;
@@ -42,7 +42,7 @@ describe("Portfolio Testing", () => {
         const updatePortfolio = {
             _id: "BTC",
             name: "Bitcoin",
-            investment: 0.25
+            crypto: 0.25
         }
         chai.request(server).patch(`/updatePortfolio/${testPortfolio._id}`).send(updatePortfolio).end((err, res) => {
             chai.expect(err).to.be.null;
@@ -52,7 +52,7 @@ describe("Portfolio Testing", () => {
         })
     })
     it("should get the test portfolio of BTC", (done) => {
-        chai.request(server).get(`/getPortfolio/${testPortfolio._id}`).end((err,res) => {
+        chai.request(server).get(`/getPortfolio/${testPortfolio._id}`).end((err, res) => {
             chai.expect(err).to.be.null;
             chai.expect(res.status).to.equal(200);
             chai.expect(res.body).to.deep.include(testPortfolio);
@@ -60,7 +60,7 @@ describe("Portfolio Testing", () => {
         })
     })
     it("should delete the test Portfolio", (done) => {
-        chai.request(server).delete(`/delete/${testPortfolio._id}`).end((err,res) => {
+        chai.request(server).delete(`/delete/${testPortfolio._id}`).end((err, res) => {
             chai.expect(err).to.be.null;
             chai.expect(res.status).to.equal(201);
             chai.expect(res.body).to.deep.include(testPortfolio);

@@ -10,13 +10,13 @@ const portfolioSchema = new Schema({
         type: String,
         require: true,
         minlength: 2
-     },
+    },
     name: {
         type: String,
         require: true,
         minlength: 2
     },
-    investment: {
+    crypto: {
         type: Number,
         require: true
     }
@@ -24,6 +24,6 @@ const portfolioSchema = new Schema({
 
 const portfolioModel = mongoose.model("portfolio", portfolioSchema);
 
-module.exports = { 
+module.exports = {
     portfolioModel,
- };
+};
