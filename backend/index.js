@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const app = express();
-const routes = require("./route.js");
+const routes = require("./routes.js");
 const bodyParser = require('body-parser')
 app.use(bodyParser.json());
 

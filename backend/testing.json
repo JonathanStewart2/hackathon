@@ -1,0 +1,12 @@
+{
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "investment": "0.1",
+    "transactions": [
+        {
+            "PPC": "15000",
+            "Purchased": "0.1",
+            "Date": "2022-10-01T23:00:00Z"
+        }
+    ]
+}
