@@ -1,12 +1,13 @@
+// FOR PORTFOLIO DB
 {
     "_id": "BTC",
     "name": "Bitcoin",
-    "investment": "0.1"
+    "crypto": "0.1"
 }
 {
     "_id": "ETH",
     "name": "Ethereum",
-    "investment": "0.5"
+    "crypto": "0.5"
 }
 
 // FOR A TRANSACTIONAL DATABASE ADDITION

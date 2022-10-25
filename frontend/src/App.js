@@ -5,8 +5,9 @@ import {
   BrowserRouter as Router, Link, Routes, Route,
 } from 'react-router-dom';
 import Portfolio from './Components/Portfolio/Portfolio.jsx'
+import Edit from './Components/Portfolio/Edit.jsx'
+import Remove from './Components/Portfolio/Remove.jsx'
 import AddCrypto from './Components/Portfolio/AddCrypto.jsx'
-import RemoveCrypto from './Components/Portfolio/RemoveCrypto.jsx'
 import Trading from './Components/Trading/Trading.jsx'
 import Home from './Components/Home.jsx'
 
@@ -26,9 +27,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio/edit/:id" element={<Edit />} />
+            <Route path="/portfolio/remove/:id" element={<Remove />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/addcrypto" element={<AddCrypto />} />
-            <Route path="/removecrypto" element={<RemoveCrypto />} />
           </Routes>
         </div>
       </Router>

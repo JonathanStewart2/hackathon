@@ -4,7 +4,7 @@ const { portfolioModel } = require('./schema.js');
 const router = require("express").Router();
 
 // CREATE -----------------------------------------
-router.post('/addInvestment', (req, res, next) => {
+router.post('/addCrypto', (req, res, next) => {
     portfolioModel.create(req.body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
@@ -19,9 +19,9 @@ router.get('/getPortfolio', (req, res, next) => {
 });
 
 router.get('/getPortfolio/:id', (req, res, next) => {
-    const id = req.params.id;
-    console.log(id);
-    portfolioModel.find({ id })
+    const _id = req.params.id;
+    console.log(_id);
+    portfolioModel.find({_id})
         .then(results => res.send(results))
         .catch(err => next(err))
 })
