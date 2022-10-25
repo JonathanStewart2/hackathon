@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Nav from './Nav.jsx';
 import Details from './Details.jsx';
-import { Button, Container, Col, Row } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Edit = () => {
     const { id } = useParams();
@@ -22,9 +23,8 @@ const Edit = () => {
         let body = {
             crypto: amount
         }
-        const response = axios.patch(`http://localhost:4417/updatePortfolio/${id}`, body)
-        .then(response => console.log(response));
-        setCrypto(response.data);
+        axios.patch(`http://localhost:4417/updatePortfolio/${id}`, body)
+        .then(response => console.log(response.data));
     }
 
     useEffect(() => {
@@ -35,6 +35,7 @@ const Edit = () => {
         };
         getCrypto();
       }, [id]);
+
 
     return crypto && (
         <> 
@@ -50,7 +51,7 @@ const Edit = () => {
 
                 <form onSubmit={handleSubmit}>
                 <input placeholder="New Amount:" type="number" value={amount} onChange={handleForm} />
-                <Button variant="primary" onClick={updateCrypto}>Update</Button>
+                <Link to="/portfolio"><Button variant="primary" onClick={updateCrypto}>Update</Button></Link>
                 </form>
                 
               </Row>

@@ -1,13 +1,13 @@
 import Nav from './Nav.jsx'
 import { useState } from 'react';
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const AddCrypto = () => {
     const [symbol, setSymbol] = useState("");
     const [name, setName] = useState("");
     const [coins, setCoins] = useState("");
-    const [newCrypto, setNewCrypto] = useState({});
-    const [newID, setNewID] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +34,7 @@ const AddCrypto = () => {
             crypto: coins
         }
 
-        const response = axios.post('http://localhost:4417/addCrypto', newCryptoObject)
+        axios.post('http://localhost:4417/addCrypto', newCryptoObject)
         .then(response => console.log(response));
     }
 
@@ -45,7 +45,7 @@ const AddCrypto = () => {
                 <input placeholder="Crypto symbol:" type="text" value={symbol} onChange={handleForm1} />
                 <input placeholder="Crypto name:" type="text" value={name} onChange={handleForm2} />
                 <input placeholder="Amount:" type="text" value={coins} onChange={handleForm3} />
-                <button type="button" onClick={createObject}>Add</button>
+                <Link to="/portfolio"><Button variant="info" type="button" onClick={createObject}>Add</Button></Link>
             </form>
         </>
     )

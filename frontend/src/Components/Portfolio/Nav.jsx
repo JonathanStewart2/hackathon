@@ -6,7 +6,6 @@ const Nav = () => {
         <header>
             <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
             <Link to="/addcrypto"><Button variant="outline-primary" type="button">Add Crypto</Button></Link>
-            <Link to="/removecrypto"><Button variant="outline-primary" type="button">Remove Crypto</Button></Link>
         </header>
     )
 }

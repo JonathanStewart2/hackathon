@@ -6,28 +6,7 @@ import { Link } from 'react-router-dom';
 import Nav from './Nav.jsx'
 
 const Portfolio = () => {
-    const [crypto, setCrypto] = useState("");
     const [portfolio, setPortfolio] = useState([]);
-
-    const newCrypto = ({ target }) => {
-        setCrypto(target.value)
-    }
-
-    // const cryptoPatch = (crypto) = {
-
-    //     const response = axios.post(`http://localhost:4417/updatePortfolio/${crypto._id}`, //add new crypto value here),
-    //     .then(response => console.log(response));
-    // }
-
-    const removeCoins = () => {
-        //PATCH
-        //cryptoPatch()
-    }
-
-    const addCoins = () => {
-        //PATCH
-         //cryptoPatch()
-    }
 
     useEffect(() => {
         console.log('Loaded');
@@ -66,7 +45,7 @@ const Portfolio = () => {
                                 crypto={item.crypto}
                                 />
                             <Link to={`./edit/${item.symbol}`}><Button variant="success" type="button">Edit</Button></Link>
-                            <Link to={`./remove/${item.symbol}`}></Link><Button variant="danger" type="button">Remove</Button>
+                            <Link to={`./remove/${item.symbol}`}><Button variant="danger" type="button">Remove</Button></Link>
                         </Col>
                     ))
                 }

@@ -9,21 +9,9 @@ import { Link } from 'react-router-dom';
 const Remove = () => {
     const { id } = useParams();
     const [crypto, setCrypto] = useState();
-    const [amount, setAmount] = useState();
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    const handleForm = (e) => {
-        setAmount(e.target.value);
-    }
 
     const removeCrypto = () => {
-        let body = {
-            crypto: amount
-        }
-        const response = axios.patch(`http://localhost:4417/delete/${id}`, body)
+        axios.delete(`http://localhost:4417/delete/${id}`)
         .then(response => console.log(response));
     }
 
@@ -49,8 +37,8 @@ const Remove = () => {
                     />
 
                 <h3>Are you sure you want to Remove {id} From your Portfolio?</h3>
-                <Button variant="danger" onClick={removeCrypto}>Remove</Button>
-                <Link to="/portfolio"><Button variant="primary" onClick={removeCrypto}>Back to Safety</Button></Link>
+                <Link to="/portfolio"><Button variant="danger" onClick={removeCrypto}>Remove</Button></Link>
+                <Link to="/portfolio"><Button variant="primary">Back to Safety</Button></Link>
                 
                 
               </Row>
