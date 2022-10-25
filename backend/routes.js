@@ -4,7 +4,7 @@ const { portfolioModel } = require('./schema.js');
 const router = require("express").Router();
 
 // CREATE -----------------------------------------
-router.post('/addInvestment', (req, res, next) => {
+router.post('/addCrypto', (req, res, next) => {
     portfolioModel.create(req.body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))

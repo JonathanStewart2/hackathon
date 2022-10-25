@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -6,40 +6,56 @@ import { Link } from 'react-router-dom';
 import Nav from './Nav.jsx'
 
 const Portfolio = () => {
-    const [portfolio, setPortfolio] = useState([{
-        "_id": "BTC",
-        "name": "Bitcoin",
-        "crypto": "0.15"
-    }, {
-        "_id": "ETH",
-        "name": "Ethereum",
-        "crypto": "0.5"
-    }]);
+    const [crypto, setCrypto] = useState("");
+    const [portfolio, setPortfolio] = useState([]);
 
-    const getPortfolio = async () => {
-        const response = await axios.get('http://localhost:4417/getPortfolio/');
-        console.log(response);
-        setPortfolio(response);
-        console.log(portfolio)
+    const newCrypto = ({ target }) => {
+        setCrypto(target.value)
+    }
+
+    const addCrypto = () => {
+        //POST TO MONGO
     }
 
     const addCoins = () => {
-
+        //TODO: PATCH 
     }
+
+    useEffect(() => {
+        console.log('Loaded');
+        setPortfolio([])
+        const getPortfolio = async () => {
+            const response = await axios.get('http://localhost:4417/getPortfolio');
+            const data = response.data;
+
+            for (let i = 0; i < data.length; i++){
+                let newCrypto = {
+                    symbol: data[i]._id,
+                    name: data[i].name,
+                    crypto: data[i].crypto
+                }
+                let clonePortfolio = portfolio;
+                clonePortfolio.push(newCrypto);
+                setPortfolio(clonePortfolio);
+            }
+        };
+    getPortfolio();
+    }, []);
+
 
     return (
         <div>
-            <Nav getPortfolio />
+            <Nav />
             <div>
                 {
                     portfolio.map((item) => (
-                        <Card>
+                        <Card style={{ width: '18rem' }}>
                             <Card.Body>
                                 <Card.Title>{item._id}</Card.Title>
                                 <Card.Subtitle>{item.name}</Card.Subtitle>
                                 <Card.Text>{item.crypto} {item.symbol}</Card.Text>
-                                <Link to="/addcrypto"><Button variant="outline-success" type="button">Add</Button></Link>
-                                <Link to="/removecrypto"><Button variant="outline-success" type="button">Remove</Button></Link>
+                                <Button variant="success" type="button">Add</Button>
+                                <Button variant="danger" type="button">Remove</Button>
                             </Card.Body>
                         </Card >
                     ))
