@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import Details from './Details.jsx'
+import { Button, Container, Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Nav from './Nav.jsx'
 
@@ -13,12 +13,20 @@ const Portfolio = () => {
         setCrypto(target.value)
     }
 
-    const addCrypto = () => {
-        //POST TO MONGO
+    // const cryptoPatch = (crypto) = {
+
+    //     const response = axios.post(`http://localhost:4417/updatePortfolio/${crypto._id}`, //add new crypto value here),
+    //     .then(response => console.log(response));
+    // }
+
+    const removeCoins = () => {
+        //PATCH
+        //cryptoPatch()
     }
 
     const addCoins = () => {
-        //TODO: PATCH 
+        //PATCH
+         //cryptoPatch()
     }
 
     useEffect(() => {
@@ -46,21 +54,24 @@ const Portfolio = () => {
     return (
         <div>
             <Nav />
-            <div>
+            <br />
+            <Container>
+              <Row xs={'auto'} md={'auto'} className="g-4">
                 {
                     portfolio.map((item) => (
-                        <Card style={{ width: '18rem' }}>
-                            <Card.Body>
-                                <Card.Title>{item._id}</Card.Title>
-                                <Card.Subtitle>{item.name}</Card.Subtitle>
-                                <Card.Text>{item.crypto} {item.symbol}</Card.Text>
-                                <Button variant="success" type="button">Add</Button>
-                                <Button variant="danger" type="button">Remove</Button>
-                            </Card.Body>
-                        </Card >
+                        <Col>
+                            <Details
+                                id={item._id}
+                                name={item.name}
+                                crypto={item.crypto}
+                                />
+                            <Link to={`./${item._id}`}><Button variant="success" type="button">Edit</Button></Link>
+                            <Button variant="danger" type="button">Remove</Button>
+                        </Col>
                     ))
                 }
-            </div>
+              </Row>
+          </Container>
         </div>
     )
 }

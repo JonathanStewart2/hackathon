@@ -1,11 +1,13 @@
 import Nav from './Nav.jsx'
 import { useState } from 'react';
+import axios from 'axios';
 
 const AddCrypto = () => {
     const [symbol, setSymbol] = useState("");
     const [name, setName] = useState("");
     const [coins, setCoins] = useState("");
     const [newCrypto, setNewCrypto] = useState({});
+    const [newID, setNewID] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,14 +27,15 @@ const AddCrypto = () => {
     }
 
     const createObject = () => {
+
         let newCryptoObject = {
             _id: symbol,
             name: name,
             crypto: coins
         }
-        setNewCrypto(newCryptoObject);
-        console.log("NEW CRYPTO OBJ:", newCryptoObject);
-        console.log("STATE ", newCrypto);
+
+        const response = axios.post('http://localhost:4417/addCrypto', newCryptoObject)
+        .then(response => console.log(response));
     }
 
     return (

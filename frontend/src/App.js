@@ -7,6 +7,7 @@ import {
 import Portfolio from './Components/Portfolio/Portfolio.jsx'
 import AddCrypto from './Components/Portfolio/AddCrypto.jsx'
 import RemoveCrypto from './Components/Portfolio/RemoveCrypto.jsx'
+import Edit from './Components/Portfolio/Edit.jsx'
 import Trading from './Components/Trading/Trading.jsx'
 import Home from './Components/Home.jsx'
 
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio/:id" element={<Edit />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/addcrypto" element={<AddCrypto />} />
             <Route path="/removecrypto" element={<RemoveCrypto />} />
