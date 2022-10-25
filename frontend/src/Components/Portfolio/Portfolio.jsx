@@ -61,12 +61,12 @@ const Portfolio = () => {
                     portfolio.map((item) => (
                         <Col>
                             <Details
-                                id={item._id}
+                                id={item.symbol}
                                 name={item.name}
                                 crypto={item.crypto}
                                 />
-                            <Link to={`./${item._id}`}><Button variant="success" type="button">Edit</Button></Link>
-                            <Button variant="danger" type="button">Remove</Button>
+                            <Link to={`./edit/${item.symbol}`}><Button variant="success" type="button">Edit</Button></Link>
+                            <Link to={`./remove/${item.symbol}`}></Link><Button variant="danger" type="button">Remove</Button>
                         </Col>
                     ))
                 }

@@ -19,9 +19,9 @@ router.get('/getPortfolio', (req, res, next) => {
 });
 
 router.get('/getPortfolio/:id', (req, res, next) => {
-    const id = req.params.id;
-    console.log(id);
-    portfolioModel.find({ id })
+    const _id = req.params.id;
+    console.log(_id);
+    portfolioModel.find({_id})
         .then(results => res.send(results))
         .catch(err => next(err))
 })

@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Nav from './Nav.jsx';
 import Details from './Details.jsx';
-import { Button, Container, Col, Row } from 'react-bootstrap';
+import { Button, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const Edit = () => {
+const Remove = () => {
     const { id } = useParams();
     const [crypto, setCrypto] = useState();
     const [amount, setAmount] = useState();
@@ -18,13 +19,12 @@ const Edit = () => {
         setAmount(e.target.value);
     }
 
-    const updateCrypto = () => {
+    const removeCrypto = () => {
         let body = {
             crypto: amount
         }
-        const response = axios.patch(`http://localhost:4417/updatePortfolio/${id}`, body)
+        const response = axios.patch(`http://localhost:4417/delete/${id}`, body)
         .then(response => console.log(response));
-        setCrypto(response.data);
     }
 
     useEffect(() => {
@@ -48,14 +48,14 @@ const Edit = () => {
                     crypto={crypto.crypto}
                     />
 
-                <form onSubmit={handleSubmit}>
-                <input placeholder="New Amount:" type="number" value={amount} onChange={handleForm} />
-                <Button variant="primary" onClick={updateCrypto}>Update</Button>
-                </form>
+                <h3>Are you sure you want to Remove {id} From your Portfolio?</h3>
+                <Button variant="danger" onClick={removeCrypto}>Remove</Button>
+                <Link to="/portfolio"><Button variant="primary" onClick={removeCrypto}>Back to Safety</Button></Link>
+                
                 
               </Row>
             </Container>
         </>
     )
 }
-export default Edit;
+export default Remove;
