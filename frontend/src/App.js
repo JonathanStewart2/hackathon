@@ -21,11 +21,10 @@ function App() {
     <div className="appDiv">
       <Router>
         <nav className="navBar">
-          <table>
+          <table width="90%">
             <tr>
-              <th><img src={NavLogo} alt="CryptoBytes Logo"/></th>
+              <th><Link to="/"><img src={NavLogo} alt="CryptoBytes Logo"/></Link></th>
               <th>  
-                <Link to="/"><Button variant="outline-light" type="button">Home</Button></Link>
                 <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
                 <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
               </th>

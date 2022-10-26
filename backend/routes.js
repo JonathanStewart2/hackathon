@@ -49,15 +49,28 @@ router.delete('/delete/:id', (req, res, next) => {
 })
 
 
-//API PROXY GET
-router.get("/api/search", async (req, res) => {
+//API PROXY GETS ----------
 
-        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
+// API FOR 16 CRYPTOS
+router.get("/api/search", async (req, res, next) => {
+        // SANDBOX
+        await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
         { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
     })
+        
+        // PRODUCTION
+    //     await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
+    //     { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+    // })
 
         .then(results => res.status(201).send(JSON.stringify(results.data)))
         .catch(err => console.log(err))
 })
 
+// API FOR CRYPTO NEWS
+router.get("/news", async (req,res,next) => {
+    await axios.get("", 
+        { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+    })
+})
 module.exports = router;
