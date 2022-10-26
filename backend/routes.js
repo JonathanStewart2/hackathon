@@ -1,12 +1,11 @@
 'use strict';
 
-const { portfolioModel } = require('./database/schema.js');
+const { portfolioModel, userModel } = require('./database/schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const crypto = require('crypto');
 
 
 // AUTHENTICATION
