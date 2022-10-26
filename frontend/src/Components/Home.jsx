@@ -1,14 +1,12 @@
+import MainLogo from './imgs/logo-main.png'
+
 const Home = () => {
 
 
     return (
-        <>
-        <br />
-        <br />
-        <h1> Welcome to CryptoBytes - the online Crypto Portfolio Tracker.</h1>
-        <br />
-        <br />
-        </>
+        <div className="homeDiv">
+            <img className="homeLogo" src={MainLogo} alt="Homepage CryptoBytes Logo" />
+        </div>
     )
 }
 

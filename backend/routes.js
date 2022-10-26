@@ -52,11 +52,12 @@ router.delete('/delete/:id', (req, res, next) => {
 //API PROXY GET
 router.get("/api/search", async (req, res) => {
 
-        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC,ETH,LRC", 
+        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
         { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
     })
+
         .then(results => res.status(201).send(JSON.stringify(results.data)))
-        .catch(err => next(err))
+        .catch(err => console.log(err))
 })
 
 module.exports = router;
