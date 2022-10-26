@@ -1,11 +1,16 @@
-import MainLogo from './imgs/logo-main.png'
+import HeadLogo from './imgs/head-logo.png';
 
 const Home = () => {
 
 
     return (
         <div className="homeDiv">
-            <img className="homeLogo" src={MainLogo} alt="Homepage CryptoBytes Logo" />
+            <header className="headFoot">
+            <img className="headLogo" src={HeadLogo} alt="Homepage CryptoBytes Logo" />
+            </header>
+            <div>
+                <br></br>
+            </div>
         </div>
     )
 }

@@ -5,6 +5,11 @@ const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
 
+// AUTHENTICATION
+router.post('/signup', (req, res, next) => {
+    console.log(req.body);
+  });
+
 // CREATE -----------------------------------------
 router.post('/addCrypto', (req, res, next) => {
     portfolioModel.create(req.body)
@@ -73,4 +78,7 @@ router.get("/news", async (req,res,next) => {
         { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
     })
 })
+
+
+
 module.exports = router;

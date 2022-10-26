@@ -5,6 +5,7 @@ import {
   BrowserRouter as Router, Link, Routes, Route,
 } from 'react-router-dom';
 import NavLogo from './Components/imgs/logo-nav.png'
+import FootLogo from './Components/imgs/foot-logo.png';
 import Portfolio from './Components/Portfolio/Portfolio.jsx'
 import Edit from './Components/Portfolio/Edit.jsx'
 import Remove from './Components/Portfolio/Remove.jsx'
@@ -13,7 +14,7 @@ import Trading from './Components/Trading/Trading.jsx'
 import Buy from './Components/Trading/Buy.jsx'
 import Search from './Components/Trading/Search.jsx'
 import Home from './Components/Home.jsx'
-
+import Signup from './Components/Sign-up.jsx'
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <div className="contentDiv">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/portfolio/edit/:id" element={<Edit />} />
             <Route path="/portfolio/remove/:id" element={<Remove />} />
@@ -45,8 +47,10 @@ function App() {
           </Routes>
         </div>
       </Router>
+      <footer className="headFoot">
+        <img className="footLogo" src={FootLogo} alt="Footer CryptoBytes Logo" />
+      </footer>
     </div>
-
   );
 }
 
