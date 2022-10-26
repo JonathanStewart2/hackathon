@@ -3,15 +3,26 @@ const express = require('express');
 const app = express();
 const routes = require("./routes.js");
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
 const cors = require("cors");
+const cookieParser = require("cookie-parser")
+
+
 app.use(cors());
+app.use(bodyParser.json());
 
 // LOGGER
 const logger = (req,res,next) => {
     console.log(`Request received at: ${new Date()}`);
     next()
 }
+
+
+app.post('/login/password',
+  passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
+  function(req, res) {
+    res.redirect('/~' + req.user.username);
+  });
+
 
 // ROUTES
 app.use(routes, logger);

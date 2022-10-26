@@ -4,11 +4,21 @@ const { portfolioModel } = require('./schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const crypto = require('crypto');
+
 
 // AUTHENTICATION
-router.post('/signup', (req, res, next) => {
-    console.log(req.body);
-  });
+// router.post('/signup', (req, res, next) => {
+//     console.log(req.body);
+//     res.render('login');
+//   });
+
+
+
+
+
 
 // CREATE -----------------------------------------
 router.post('/addCrypto', (req, res, next) => {
@@ -72,7 +82,7 @@ router.get("/api/search", async (req, res, next) => {
         .catch(err => console.log(err))
 })
 
-// API FOR CRYPTO NEWS
+// API FOR CRYPTO NEWS  NEWSDATA.IO
 router.get("/news", async (req,res,next) => {
     await axios.get("", 
         { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}

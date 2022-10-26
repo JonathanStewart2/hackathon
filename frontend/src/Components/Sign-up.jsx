@@ -6,6 +6,7 @@ import axios from 'axios';
 const SignUp = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [token, setToken] = useState("");
     const [status, setStatus] = useState("");
 
     const formHandler = (e) => {
