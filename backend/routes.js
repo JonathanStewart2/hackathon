@@ -1,6 +1,6 @@
 'use strict';
 
-const { portfolioModel } = require('./schema.js');
+const { portfolioModel } = require('./database/schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();

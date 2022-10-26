@@ -4,9 +4,12 @@ const app = express();
 const routes = require("./routes.js");
 const bodyParser = require('body-parser');
 const cors = require("cors");
+const session = require('express-session')
 const cookieParser = require("cookie-parser")
+const passport = require('passport');
 
-
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -16,12 +19,25 @@ const logger = (req,res,next) => {
     next()
 }
 
+app.use(
+  session({
+  secret: 'and in the darkness bind them', 
+  resave: false,
+  saveUninitialized: false
+  })
+)
 
-app.post('/login/password',
-  passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
-  function(req, res) {
-    res.redirect('/~' + req.user.username);
-  });
+app.use( (req, res, next) => {
+  console.log('req.session', req.session);
+  return next();
+});
+
+
+// app.post('/login/password',
+//   passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
+//   function(req, res) {
+//     res.redirect('/~' + req.user.username);
+//   });
 
 
 // ROUTES

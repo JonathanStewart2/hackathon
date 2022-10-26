@@ -16,15 +16,9 @@ import Search from './Components/Trading/Search.jsx'
 import Home from './Components/Home.jsx'
 import Signup from './Components/Sign-up.jsx'
 import Login from './Components/Login.jsx'
-import { useState } from 'react'
 
 
 function App() {
-  const [token, useToken] = useState("");
-
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
 
   return (
     <div className="appDiv">

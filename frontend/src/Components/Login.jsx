@@ -1,4 +1,4 @@
-
+import NavLogo from './imgs/logo-nav.png'
 
 const Login = () => {
 
