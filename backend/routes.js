@@ -2,6 +2,8 @@
 
 const { portfolioModel } = require('./schema.js');
 const router = require("express").Router();
+const axios = require("axios");
+require('dotenv').config();
 
 // CREATE -----------------------------------------
 router.post('/addCrypto', (req, res, next) => {
@@ -46,37 +48,15 @@ router.delete('/delete/:id', (req, res, next) => {
         .catch(err => next(err))
 })
 
-// API PROXY FETCH
+
+//API PROXY GET
 router.get("/api/search", async (req, res) => {
-    //const query = `q=${req.query.q}`;
-    try {
-        const res = await axios.get('https://pro-api.coinmarketcap.com/cryptocurrency/latest', {
-            headers: {
-                'X-CMC_PRO_API_KEY': `${process.env.REACT_APP_API_KEY}`,
-            }
-        })
-        console.log(res);
-        //setCrypto(res.data.Search);
-    } catch (err) {
-        console.error('Error');
-    }
+
+        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC,ETH,LRC", 
+        { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+    })
+        .then(results => res.status(201).send(JSON.stringify(results.data)))
+        .catch(err => next(err))
 })
-
-// It uses node-fetch to call the goodreads api, and reads the key from .env
-// 	const res = await fetch(`https://www.goodreads.com/search/index.xml?key=${process.env.GOODREADS_API_KEY}&${searchString}`);
-// 	const xml = await response.text();
-// 	const results = JSON.parse(json).GoodreadsResponse.search.results;
-// 	return res.json({
-//         success: true,
-//         results
-//     })
-// } catch (err) {
-// 	return res.status(500).json({
-// 		success: false,
-// 		message: err.message,
-// 	})
-// }
-
-
 
 module.exports = router;

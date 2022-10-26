@@ -5,7 +5,7 @@ const Home = () => {
         <>
         <br />
         <br />
-        <h1> Welcome to the Crypto Portfolio Tracker.</h1>
+        <h1> Welcome to CryptoBytes - the online Crypto Portfolio Tracker.</h1>
         <br />
         <br />
         </>

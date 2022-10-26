@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
@@ -10,19 +10,22 @@ const Trading = () => {
         setRequest(e.target.value);
     };
 
-    const getCrypto = async (request) => {
-        setRequest(request);
-        const response = await axios.get('http://localhost:4417/api/search');
-        console.log(response);
-        setCrypto(response);
-        console.log(crypto)
-    };
+    useEffect(() => {
+        const displayCrypto = async () => {
+            const res = await axios.get('http://localhost:4417/api/search');
+            console.log(res);
+            
+        };
+        displayCrypto();
+      }, []);
+
+
 
     return (
         <>
             <h3>Crypto Search</h3>
             <input type="text" default="Crypto" value={request} onChange={changeHandler} />
-            <button type="button" onClick={() => getCrypto(request)}>Search</button>
+            <button type="button">Search</button>
 
         </>
     )

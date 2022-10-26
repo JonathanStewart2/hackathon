@@ -18,11 +18,18 @@ function App() {
     <div className="appDiv">
       <Router>
         <nav className="navBar">
-          <h3 className="navLogo">Crypto Portfolio Tracker</h3>
-          <Link to="/"><Button variant="outline-warning" type="button">Home</Button></Link>
-          <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
-          <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
-        </nav>
+          <table>
+            <tr>
+              <th><h3 className="navLogo">CryptoBytes</h3></th>
+              <th>  
+                <Link to="/"><Button variant="outline-light" type="button">Home</Button></Link>
+                <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
+                <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
+              </th>
+            </tr>
+          </table>
+          
+         </nav>
         <div className="contentDiv">
           <Routes>
             <Route path="/" element={<Home />} />
