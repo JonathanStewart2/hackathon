@@ -5,12 +5,13 @@ const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
 const passport = require('./auth.js')
+const createError = require('http-errors');
 
 
 // AUTHENTICATION
 const isAuthenticated = (req, res, next) => {
     if (!req.isAuthenticated()){
-        return next(createError).Unauthorized('Login failed'));
+        return next(createError).Unauthorized('Login failed');
     }
     return next();
 }
@@ -50,7 +51,7 @@ router.post('./login', passport.authenticate('local'), (req,res) => {
 
 // CREATE -----------------------------------------
 router.post('/addCrypto', (req, res, next) => {
-    portfolioModel.create(req.body)
+    PortfolioModel.create(req.body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
 });
@@ -58,7 +59,7 @@ router.post('/addCrypto', (req, res, next) => {
 // READ -----------------------------------------
 router.get('/getPortfolio', (req, res, next) => {
     console.log(req);
-    portfolioModel.find()
+    PortfolioModel.find()
         .then(results => res.send(results))
         .catch(err => next(err))
 });
@@ -66,7 +67,7 @@ router.get('/getPortfolio', (req, res, next) => {
 router.get('/getPortfolio/:id', (req, res, next) => {
     const _id = req.params.id;
     console.log(_id);
-    portfolioModel.find({_id})
+    PortfolioModel.find({_id})
         .then(results => res.send(results))
         .catch(err => next(err))
 })
@@ -74,8 +75,8 @@ router.get('/getPortfolio/:id', (req, res, next) => {
 // UPDATE -----------------------------------------
 router.patch("/updatePortfolio/:id", async (req, res, next) => {
     try {
-        await portfolioModel.findByIdAndUpdate(req.params.id, req.body)
-        const newModel = await portfolioModel.findById(req.params.id);
+        await PortfolioModel.findByIdAndUpdate(req.params.id, req.body)
+        const newModel = await PortfolioModel.findById(req.params.id);
         console.log(newModel);
         res.send(newModel);
     } catch (err) {
@@ -86,7 +87,7 @@ router.patch("/updatePortfolio/:id", async (req, res, next) => {
 // DELETE -----------------------------------------
 router.delete('/delete/:id', (req, res, next) => {
     const id = req.params.id;
-    portfolioModel.findByIdAndDelete(id)
+    PortfolioModel.findByIdAndDelete(id)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
 })
@@ -98,12 +99,12 @@ router.delete('/delete/:id', (req, res, next) => {
 router.get("/api/search", async (req, res, next) => {
         // SANDBOX
         await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
-        { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+        { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
     })
         
         // PRODUCTION
     //     await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
-    //     { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+    //     { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
     // })
 
         .then(results => res.status(201).send(JSON.stringify(results.data)))
@@ -113,7 +114,7 @@ router.get("/api/search", async (req, res, next) => {
 // API FOR CRYPTO NEWS  NEWSDATA.IO
 router.get("/news", async (req,res,next) => {
     await axios.get("", 
-        { headers: {"X-CoinAPI-Key": `${process.env.API_KEY}`}
+        { headers: {"X-CoinAPI-Key": `${process.env.NEWS_API_KEY}`}
     })
 })
 

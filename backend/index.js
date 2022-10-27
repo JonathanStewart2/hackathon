@@ -8,6 +8,7 @@ const session = require('express-session')
 const cookieParser = require("cookie-parser")
 const passport = require('./auth.js');
 const logger = require('morgan');
+const path = require('path');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: 'Oculus Ex Inferni', 
+    secret: process.env.SECRET, 
     resave: true,
     saveUninitialized: true
 }));
@@ -27,10 +28,10 @@ app.use(logger('dev'));
 
 
 // LOGGER
-const logger = (req,res,next) => {
-    console.log(`Request received at: ${new Date()}`);
-    next()
-}
+// const logger = (req,res,next) => {
+//     console.log(`Request received at: ${new Date()}`);
+//     next()
+// }
 
 app.use(routes, logger);
 
