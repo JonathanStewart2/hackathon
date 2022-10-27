@@ -18,17 +18,16 @@ const Trading = () => {
             const res = await axios.get('http://localhost:4417/api/search');
             console.log(res.data);
             const data = res.data;
-
+            let cloneCrypto = crypto;
             for (let i = 0; i < data.length; i++){
                 let newCrypto = {
                     symbol: data[i].asset_id,
                     name: data[i].name,
                     price: parseFloat(data[i].price_usd).toFixed(5)
                 }
-                let cloneCrypto = crypto;
                 cloneCrypto.push(newCrypto);
-                setCrypto(cloneCrypto);
             }
+            setCrypto(cloneCrypto);
         };
         displayCrypto();
       }, []);

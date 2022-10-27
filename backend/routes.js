@@ -11,23 +11,23 @@ const createError = require('http-errors');
 // AUTHENTICATION
 const isAuthenticated = (req, res, next) => {
     if (!req.isAuthenticated()){
-        return next(createError).Unauthorized('Login failed');
+        return next(createError.Unauthorized('Login failed'));
     }
     return next();
 }
 
 router.get('/getAll', isAuthenticated, (req, res, next) => {
-    // console.log(body)
-    // UserModel.find(body)
-    // .then(results => res.send(results))
-    // .catch(err => next(err))
+    console.log(req.body)
+    UserModel.find(req.body)
+    .then(results => res.send(results))
+    .catch(err => next(err))
 
-    UserModel.find((err,users) => {
-        if (err) {
-            return next(err);
-        }
-        return res(users);
-    })
+    // UserModel.find((err,users) => {
+    //     if (err) {
+    //         return next(err);
+    //     }
+    //     return res(users);
+    // })
 })
 
 router.post('/register', async ({body}, res, next) => {
@@ -47,6 +47,7 @@ router.post('/register', async ({body}, res, next) => {
 })
 
 router.post('/login', passport.authenticate('local'), (req,res) => {
+    console.log("FIRST: ", req)
     res.redirect('getAll');
 })
 
