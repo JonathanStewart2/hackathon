@@ -3,12 +3,13 @@ import { useState } from 'react'
 import Form from './Form.jsx';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
+    const navigate = useNavigate();
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -34,7 +35,7 @@ const Login = () => {
         })
         .then(res => {
             if (res.data) {
-                setStatus("Success");  
+                navigate("/");  
             } else {
                 setStatus("Failed");   
             }

@@ -26,14 +26,14 @@ router.get('/getAll', isAuthenticated, (req, res, next) => {
     })
 })
 
-router.post('/register', async (req, res, next) => {
-    console.log(req.body);
-    UserModel.create(req.body)
-    .then(results => res.redirect('/login'))
-    .catch(err => next(err))
+router.post('/register', async ({body}, res, next) => {
+    console.log(body);
+    UserModel.create(body)
+        .then(results => res.status(201).send(results))
+        .catch(err => next(err))
     // return results.redirect('login.html');
     // JORDANS WAY:
-    // const newUser = new UserModel(body)
+    // const newUser = UserModel.create(req.body)
     // await newUser.save((err) => {
     //     if (err) {
     //         return next(err);
@@ -43,7 +43,7 @@ router.post('/register', async (req, res, next) => {
 })
 
 router.post('./login', passport.authenticate('local'), (req,res) => {
-    res.redirect('getUsers');
+    res.redirect('getAll');
 })
 
 

@@ -1,12 +1,14 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignUp = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
+    const navigate = useNavigate();
 
     const formHandler = (e) => {
         e.preventDefault()
@@ -32,7 +34,7 @@ const SignUp = () => {
         })
         .then(res => {
             if (res.data) {
-                setStatus("Success");  
+                navigate("/login");    
             } else {
                 setStatus("Failed");   
             }
