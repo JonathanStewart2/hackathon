@@ -14,8 +14,8 @@ import Trading from './Components/Trading/Trading.jsx'
 import Buy from './Components/Trading/Buy.jsx'
 import Search from './Components/Trading/Search.jsx'
 import Home from './Components/Home.jsx'
-import Signup from './Components/Sign-up.jsx'
-import Login from './Components/Login.jsx'
+import Signup from './Components/Auth/Sign-up.jsx'
+import Login from './Components/Auth/Login.jsx'
 
 
 function App() {
@@ -31,6 +31,9 @@ function App() {
                 <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
                 <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
               </th>
+              <th >
+              <Link to="/login"><Button variant="light" type="button">Log In</Button></Link>
+              </th>
             </tr>
           </table>
           
@@ -39,6 +42,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/portfolio/edit/:id" element={<Edit />} />
             <Route path="/portfolio/remove/:id" element={<Remove />} />

@@ -6,12 +6,25 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 const session = require('express-session')
 const cookieParser = require("cookie-parser")
-const passport = require('passport');
+const passport = require('./auth.js');
+const logger = require('morgan');
 
-app.use(passport.initialize())
-app.use(passport.session())
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(express.urlencoded({
+    extended: false,
+}));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'Oculus Ex Inferni', 
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(logger('dev'));
+
 
 // LOGGER
 const logger = (req,res,next) => {
@@ -19,38 +32,14 @@ const logger = (req,res,next) => {
     next()
 }
 
-app.use(
-  session({
-  secret: 'and in the darkness bind them', 
-  resave: false,
-  saveUninitialized: false
-  })
-)
-
-app.use( (req, res, next) => {
-  console.log('req.session', req.session);
-  return next();
-});
-
-
-// app.post('/login/password',
-//   passport.authenticate('local', { failureRedirect: '/login', failureMessage: true }),
-//   function(req, res) {
-//     res.redirect('/~' + req.user.username);
-//   });
-
-
-// ROUTES
 app.use(routes, logger);
 
-// ERRORS
 app.use((err,req,res,next) => {
     console.log(err);
     res.status(err.status || 500).send(err.message || `Unknown error`);
     next();
 })
 
-// start the server
 const server = app.listen(4417, () => {
     console.log(`Server started succesfully on port ${server.address().port}`);
 })

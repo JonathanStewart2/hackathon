@@ -1,8 +1,11 @@
 'use strict';
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost:27017/portfolio_db',
-    { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/portfolio_db', { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+     });
+const bcrypto = require('bcrypt');
 
     
 
@@ -24,14 +27,15 @@ const portfolioSchema = new Schema({
 });
 
 const userSchema = new Schema({
-    email: {
+    username: {
       type: String,
       required: true,
       unique: true
     },
     password: {
       type: String,
-      required: true
+      required: true,
+      set: (pass) => bcrypto.hashSync(pass, 12)
     }
   });
   

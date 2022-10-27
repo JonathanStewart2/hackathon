@@ -9,10 +9,13 @@ const LocalStrategy = require('passport-local');
 
 
 // AUTHENTICATION
-// router.post('/signup', (req, res, next) => {
-//     console.log(req.body);
-//     res.render('login');
-//   });
+router.post('/signup', (req, res, next) => {
+    console.log(req.body); 
+  });
+
+router.post('/login', (req, res, next) => {
+    console.log(req.body); 
+  });
 
 
 
