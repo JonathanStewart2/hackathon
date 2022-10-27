@@ -43,6 +43,6 @@ const userModel = mongoose.model('user', userSchema);
 const portfolioModel = mongoose.model("portfolio", portfolioSchema);
 
 module.exports = {
-    portfolioModel,
+    PortfolioModel,
     userModel
 };

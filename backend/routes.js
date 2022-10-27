@@ -1,24 +1,50 @@
 'use strict';
 
-const { portfolioModel, userModel } = require('./database/schema.js');
+const { PortfolioModel, UserModel } = require('./database/schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
+const passport = require('./auth.js')
 
 
 // AUTHENTICATION
-router.post('/signup', (req, res, next) => {
-    console.log(req.body); 
-  });
+const isAuthenticated = (req, res, next) => {
+    if (!req.isAuthenticated()){
+        return next(createError).Unauthorized('Login failed'));
+    }
+    return next();
+}
 
-router.post('/login', (req, res, next) => {
-    console.log(req.body); 
-  });
+router.get('/getUsers', isAuthenticated, (req, res, next) => {
+    UserModel.find((err,user) => {
+        if (err) {
+            return next(err);
+        }
+        return res.json(users);
+    })
+})
 
+router.post('/register', async ({body}, res, next) => {
+    const newUser = new UserModel(body);
+    await newUser.save((err) => {
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('login.html');
+    });
+})
 
+router.post('./login', passport.authenticate('local'), (req,res) => {
+    res.redirect('getUsers');
+})
 
+// router.post('/signup', (req, res, next) => {
+//     console.log(req.body); 
+//   });
+
+// router.post('/login', (req, res, next) => {
+//     console.log(req.body); 
+//   });
 
 
 
