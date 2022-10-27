@@ -13,6 +13,7 @@ import AddCrypto from './Components/Portfolio/AddCrypto.jsx'
 import Trading from './Components/Trading/Trading.jsx'
 import Buy from './Components/Trading/Buy.jsx'
 import Search from './Components/Trading/Search.jsx'
+import News from './Components/News/News.jsx'
 import Home from './Components/Home.jsx'
 import Signup from './Components/Auth/Sign-up.jsx'
 import Login from './Components/Auth/Login.jsx'
@@ -30,6 +31,7 @@ function App() {
               <th>  
                 <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
                 <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
+                <Link to="/news"><Button variant="outline-info" type="button">News</Button></Link>
               </th>
               <th >
               <Link to="/login"><Button variant="light" type="button">Log In</Button></Link>
@@ -50,6 +52,7 @@ function App() {
             <Route path="/trading/buy/:id" element={<Buy />} />
             <Route path="/trading/search/:id" element={<Search />} />
             <Route path="/addcrypto" element={<AddCrypto />} />
+            <Route path="/news" element={<News />} />
           </Routes>
         </div>
       </Router>

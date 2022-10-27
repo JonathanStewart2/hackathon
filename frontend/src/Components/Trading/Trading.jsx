@@ -31,7 +31,7 @@ const Trading = () => {
             }
         };
         displayCrypto();
-      }, [crypto]);
+      }, []);
 
 
 

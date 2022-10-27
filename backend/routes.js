@@ -110,9 +110,11 @@ router.get("/api/search", async (req, res, next) => {
         .catch(err => console.log(err))
 })
 
-// API FOR CRYPTO NEWS  NEWSDATA.IO
+// API FOR CRYPTO NEWS  NEWSAPI
 router.get("/news", async (req,res,next) => {
-    await axios.get(`https://newsdata.io/api/1/crypto?apikey=${process.env.NEWS_API_KEY}`)
+    await axios.get(`https://newsapi.org/v2/everything?q=bitcoin&ethereum&crypto&apiKey=${process.env.NEWS_2_API}`)
+    // await axios.get(`https://newsdata.io/api/1/crypto?apikey=${process.env.NEWS_API_KEY}&q=bitcoin`)
+    // .then(res => console.log(res.data.articles))
     .then(results => res.status(201).send(JSON.stringify(results.data)))
     .catch(err => console.log(err))
 })
