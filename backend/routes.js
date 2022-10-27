@@ -17,12 +17,16 @@ const isAuthenticated = (req, res, next) => {
 }
 
 router.get('/getAll', isAuthenticated, (req, res, next) => {
-    console.log(req)
+    // console.log(body)
+    // UserModel.find(body)
+    // .then(results => res.send(results))
+    // .catch(err => next(err))
+
     UserModel.find((err,users) => {
         if (err) {
             return next(err);
         }
-        return res.json(users);
+        return res(users);
     })
 })
 
@@ -42,7 +46,7 @@ router.post('/register', async ({body}, res, next) => {
     // });
 })
 
-router.post('./login', passport.authenticate('local'), (req,res) => {
+router.post('/login', passport.authenticate('local'), (req,res) => {
     res.redirect('getAll');
 })
 
@@ -66,7 +70,6 @@ router.get('/getPortfolio', (req, res, next) => {
 
 router.get('/getPortfolio/:id', (req, res, next) => {
     const _id = req.params.id;
-    console.log(_id);
     PortfolioModel.find({_id})
         .then(results => res.send(results))
         .catch(err => next(err))

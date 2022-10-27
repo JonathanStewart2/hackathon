@@ -36,7 +36,12 @@ const userSchema = new Schema({
       type: String,
       required: true,
       set: (pass) => bcrypto.hashSync(pass, 12)
+    },
+    email: {
+      type: String,
+      required: false
     }
+
   });
   
 const UserModel = mongoose.model('user', userSchema);

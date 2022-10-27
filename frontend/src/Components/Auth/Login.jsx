@@ -35,6 +35,7 @@ const Login = () => {
         })
         .then(res => {
             if (res.data) {
+                console.log("RES: ", res)
                 navigate("/");  
             } else {
                 setStatus("Failed");   
@@ -47,9 +48,7 @@ const Login = () => {
 
     return (
         <>
-        <header className="navBar">
-            <img src={NavLogo} alt="CryptoBytes Logo"/>
-        </header>
+
         <Form formHandler={formHandler} handleUserName={handleUserName} handlePassword={handlePassword} />
         <Button variant="primary" type="button" onClick={submit}>Log In</Button>
         {status}
