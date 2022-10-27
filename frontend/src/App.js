@@ -33,8 +33,8 @@ function App() {
                 <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
                 <Link to="/news"><Button variant="outline-info" type="button">News</Button></Link>
               </th>
-              <th >
-              <Link to="/login"><Button variant="light" type="button">Log In</Button></Link>
+              <th>
+              <Link to="/login"><Button variant="outline-light" type="button">Log In</Button></Link>
               </th>
             </tr>
           </table>
