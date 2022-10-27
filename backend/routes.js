@@ -16,8 +16,8 @@ const isAuthenticated = (req, res, next) => {
     return next();
 }
 
-router.get('/getUsers', isAuthenticated, (req, res, next) => {
-    UserModel.find((err,user) => {
+router.get('/login', isAuthenticated, (req, res, next) => {
+    UserModel.find((err,users) => {
         if (err) {
             return next(err);
         }
@@ -25,27 +25,26 @@ router.get('/getUsers', isAuthenticated, (req, res, next) => {
     })
 })
 
-router.post('/register', async ({body}, res, next) => {
-    const newUser = new UserModel(body);
-    await newUser.save((err) => {
-        if (err) {
-            return next(err);
-        }
-        return res.redirect('login.html');
-    });
+router.post('/register', async (req, res, next) => {
+    console.log(req.body);
+    UserModel.create(req.body)
+    .then(results => res.redirect('/login'))
+    .catch(err => next(err))
+    // return results.redirect('login.html');
+    // JORDANS WAY:
+    // const newUser = new UserModel(body)
+    // await newUser.save((err) => {
+    //     if (err) {
+    //         return next(err);
+    //     }
+    //     return res.redirect('login.html');
+    // });
 })
 
 router.post('./login', passport.authenticate('local'), (req,res) => {
     res.redirect('getUsers');
 })
 
-// router.post('/signup', (req, res, next) => {
-//     console.log(req.body); 
-//   });
-
-// router.post('/login', (req, res, next) => {
-//     console.log(req.body); 
-//   });
 
 
 
@@ -113,9 +112,9 @@ router.get("/api/search", async (req, res, next) => {
 
 // API FOR CRYPTO NEWS  NEWSDATA.IO
 router.get("/news", async (req,res,next) => {
-    await axios.get("", 
-        { headers: {"X-CoinAPI-Key": `${process.env.NEWS_API_KEY}`}
-    })
+    await axios.get(`https://newsdata.io/api/1/crypto?apikey=${process.env.NEWS_API_KEY}`)
+    .then(results => res.status(201).send(JSON.stringify(results.data)))
+    .catch(err => console.log(err))
 })
 
 

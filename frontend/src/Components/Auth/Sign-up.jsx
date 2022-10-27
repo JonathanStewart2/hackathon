@@ -6,7 +6,6 @@ import axios from 'axios';
 const SignUp = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
     const [status, setStatus] = useState("");
 
     const formHandler = (e) => {
@@ -25,7 +24,9 @@ const SignUp = () => {
     }
 
     const submit = () => {
-        axios.post("http://localhost:4417/signup", {
+        // console.log("UN: ", username);
+        // console.log("PW: ", password);
+        axios.post("http://localhost:4417/register", {
             username: username,
             password: password
         })
@@ -35,7 +36,8 @@ const SignUp = () => {
             } else {
                 setStatus("Failed");   
             }
-            console.log(status)
+            console.log("RES: ", res)
+            console.log("STATUS: ", status)
         })
 
     }
@@ -45,8 +47,9 @@ const SignUp = () => {
         <form onSubmit={formHandler}>
             <input placeholder="Username" type="text" value={username} onChange={handleUserName} />
             <input placeholder="Pasword:" type="text" value={password} onChange={handlePassword} />
-            <Button variant="info" type="button" onClick={submit}>Sign-Up</Button>
+            <Button variant="warning" type="button" onClick={submit}>Sign-Up</Button>
         </form>
+        {status}    
         </>
     )
 }

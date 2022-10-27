@@ -3,11 +3,11 @@ import { useState } from 'react'
 import Form from './Form.jsx';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
     const [status, setStatus] = useState("");
 
     const formHandler = (e) => {
@@ -26,6 +26,8 @@ const Login = () => {
     }
 
     const submit = () => {
+        // console.log("UN: ", username)
+        // console.log("PW: ", password)
         axios.post("http://localhost:4417/login", {
             username: username,
             password: password
@@ -36,7 +38,8 @@ const Login = () => {
             } else {
                 setStatus("Failed");   
             }
-            console.log(status)
+            console.log("RES: ", res)
+            console.log("STATUS: ", status)
         })
 
     }
@@ -47,8 +50,13 @@ const Login = () => {
             <img src={NavLogo} alt="CryptoBytes Logo"/>
         </header>
         <Form formHandler={formHandler} handleUserName={handleUserName} handlePassword={handlePassword} />
-        <Button variant="info" type="button" onClick={submit}>LogIn</Button>
-        
+        <Button variant="primary" type="button" onClick={submit}>Log In</Button>
+        {status}
+        <div>
+            <br />
+            <p>Not got an account?</p>
+            <Link to={`../signup`}><Button variant="warning" type="button">Register</Button></Link>
+        </div>
         </>
     )
 }

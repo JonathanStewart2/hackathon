@@ -39,10 +39,10 @@ const userSchema = new Schema({
     }
   });
   
-const userModel = mongoose.model('user', userSchema);
-const portfolioModel = mongoose.model("portfolio", portfolioSchema);
+const UserModel = mongoose.model('user', userSchema);
+const PortfolioModel = mongoose.model("portfolio", portfolioSchema);
 
 module.exports = {
-    portfolioModel,
-    userModel
+    PortfolioModel,
+    UserModel
 };
