@@ -1,19 +1,13 @@
 import Button from 'react-bootstrap/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import Search from './Search.jsx';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const Nav = () => {
     const [request, setRequest] = useState("")
-    const navigate = useNavigate();
 
     const changeHandler = (e) => {
         setRequest(e.target.value);
     };
-
-    const clickHandler = () => {
-        navigate(`/search/${request}`)
-    }
 
     return (
         <header className="miniNav">

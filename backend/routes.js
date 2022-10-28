@@ -17,32 +17,22 @@ const isAuthenticated = (req, res, next) => {
 }
 
 router.get('/getAll', isAuthenticated, (req, res, next) => {
-    // console.log(req.body)
-    // UserModel.find(req.body)
-    // .then(results => res.send(results))
-    // .catch(err => next(err))
+    const user = req.body
+    UserModel.find({user})
+        .then(results => res.send(results))
+        .catch(err => next(err))
 
-    UserModel.find((err,users) => {
-        if (err) return next(err);
-        return res.json(users);
-    });
+    // UserModel.find((err,user) => {
+    //     if (err) return next(err);
+    //     return res.json(user);
+    // });
 })
 
 router.post('/register', async ({body}, res, next) => {
-    console.log(body);
     UserModel.create(body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
-    // return results.redirect('login.html');
-    // JORDANS WAY:
-    // const newUser = UserModel.create(req.body)
-    // await newUser.save((err) => {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    //     return res.redirect('login.html');
-    // });
-})
+});
 
 router.post('/login', passport.authenticate('local'), (req,res) => {
     console.log("FIRST: ", req)
@@ -100,14 +90,14 @@ router.delete('/delete/:id', (req, res, next) => {
 // API FOR 16 CRYPTOS
 router.get("/api/search", async (req, res, next) => {
         // SANDBOX
-        await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
-        { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
-    })
-        
-        // PRODUCTION
-    //     await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
+    //     await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
     //     { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
     // })
+        
+        // PRODUCTION
+        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
+        { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
+    })
 
         .then(results => res.status(201).send(JSON.stringify(results.data)))
         .catch(err => console.log(err))
