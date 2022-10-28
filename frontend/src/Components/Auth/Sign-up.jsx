@@ -5,23 +5,25 @@ import axios from 'axios';
 
 const SignUp = () => {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [status, setStatus] = useState("");
     const navigate = useNavigate();
 
     const formHandler = (e) => {
         e.preventDefault()
-        console.log(e)
     }
 
     const handleUserName = (e) => {
         setUsername(e.target.value);
-        console.log(username)
+    }
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value);
     }
 
     const handlePassword = (e) => {
         setPassword(e.target.value);
-        console.log(password)
     }
 
     const submit = () => {
@@ -29,6 +31,7 @@ const SignUp = () => {
         // console.log("PW: ", password);
         axios.post("http://localhost:4417/register", {
             username: username,
+            email: email,
             password: password
         })
         .then(res => {
@@ -47,6 +50,7 @@ const SignUp = () => {
         <>
         <form onSubmit={formHandler}>
             <input placeholder="Username" type="text" value={username} onChange={handleUserName} />
+            <input placeholder="Email" type="text" value={email} onChange={handleEmail} />
             <input placeholder="Pasword:" type="text" value={password} onChange={handlePassword} />
             <Button variant="warning" type="button" onClick={submit}>Sign-Up</Button>
         </form>

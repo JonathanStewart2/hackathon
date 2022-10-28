@@ -41,7 +41,7 @@ const userSchema = new Schema({
     },
     email: {
       type: String,
-      required: false,
+      required: true,
       unique: true,
       validate: function (email) {
           return isEmail(email);

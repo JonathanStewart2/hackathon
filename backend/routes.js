@@ -43,35 +43,35 @@ const bcrypto = require('bcrypt');
 
 
 // AUTHORISATION ATTEMPT 2
-// router.post('/login', passport.authenticate('local'), login);
+router.post('/login', passport.authenticate('local'), login);
 
-// router.post('/register', register);
+router.post('/register', register);
 
 
 // CUSTOM AUTHENTICATION
-router.post('/register', async ({ body }, res, next) => {
-    UserModel.create(body)
-        .then(results => res.status(201).send(results))
-        .catch(err => next(err))
-});
+// router.post('/register', async ({ body }, res, next) => {
+//     UserModel.create(body)
+//         .then(results => res.status(201).send(results))
+//         .catch(err => next(err))
+// });
 
-const authorise = (details, pw, res, next) => {
-    console.log(details)
-    const hashedPW = bcrypto.hashSync(pw, 12)
-    console.log(hashedPW)
-    if (hashedPW === details.password){
-        res.status(201).send(details.username)
-    } else {
-        res.send("Invalid password")
-    }
-}
+// const authorise = (details, pw, res, next) => {
+//     console.log(details)
+//     const hashedPW = bcrypto.hashSync(pw, 12)
+//     console.log(hashedPW)
+//     if (hashedPW === details.password){
+//         res.status(201).send(details.username)
+//     } else {
+//         res.send("Invalid password")
+//     }
+// }
 
-router.post('/login', async (req, res, next) => {
-    const username = req.body.username;
-    UserModel.find({ username })
-        .then(results => authorise(results, req.body.password))
-        .catch(err => next(err));
-})
+// router.post('/login', async (req, res, next) => {
+//     const username = req.body.username;
+//     UserModel.find({ username })
+//         .then(results => authorise(results, req.body.password))
+//         .catch(err => next(err));
+// })
 
 
 
@@ -119,9 +119,9 @@ router.delete('/delete/:id', (req, res, next) => {
 })
 
 
+
 //API GETS ----------
 
-// API FOR 16 CRYPTOS
 router.get("/api/search", async (req, res, next) => {
     // SANDBOX
     //     await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 

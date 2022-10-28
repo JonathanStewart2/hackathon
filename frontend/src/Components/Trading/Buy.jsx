@@ -1,32 +1,31 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Container, Col, Row, Form, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Button, Container, Row, Form, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const Buy = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [request, setRequest] = useState([{symbol: "ETH", name: "Ethereum", price:"2000"}]);
+    const [request, setRequest] = useState([]);
     const [fiat, setFiat] = useState("0");
     const [crypto, setCrypto] = useState("0");
 
-    // useEffect(() => {
-    //     const getCrypto = async () => {
-    //         console.log(id)
-    //         const res = await axios.get(`http://localhost:4417/api/search/${id}`);
-    //         console.log(res);
-    //         const data = res.data;
-    //         let requestedCrypto = [{
-    //              symbol: data[0].asset_id,
-    //              name: data[0].name,
-    //              price: data[0].price_usd
-    //              }]
-    //          setRequest(requestedCrypto);
-    //     };
-    // getCrypto();
-    // }, [id]);
+    useEffect(() => {
+        const getCrypto = async () => {
+            console.log(id)
+            const res = await axios.get(`http://localhost:4417/api/search/${id}`);
+            console.log(res);
+            const data = res.data;
+            let requestedCrypto = [{
+                 symbol: data[0].asset_id,
+                 name: data[0].name,
+                 price: data[0].price_usd
+                 }]
+             setRequest(requestedCrypto);
+        };
+    getCrypto();
+    }, [id]);
 
     const formHandler1 = (e) => {
         let cryptoAmount = parseFloat(e.target.value)

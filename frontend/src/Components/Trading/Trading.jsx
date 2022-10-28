@@ -26,7 +26,6 @@ const Trading = () => {
         displayCrypto();
     }, []);
 
-    console.log("CRYPTO:", crypto);
 
     return (
         <div className="pageDiv">
