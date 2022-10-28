@@ -6,6 +6,8 @@ mongoose.connect('mongodb://localhost:27017/portfolio_db', {
     useUnifiedTopology: true
      });
 const bcrypto = require('bcrypt');
+const passportLocalMongoose = require('passport-local-mongoose');
+const { isEmail } = require('validator');
 
     
 
@@ -39,11 +41,17 @@ const userSchema = new Schema({
     },
     email: {
       type: String,
-      required: false
-    }
+      required: false,
+      unique: true,
+      validate: function (email) {
+          return isEmail(email);
+      }
+  },
 
   });
   
+userSchema.plugin(passportLocalMongoose);
+
 const UserModel = mongoose.model('user', userSchema);
 const PortfolioModel = mongoose.model("portfolio", portfolioSchema);
 

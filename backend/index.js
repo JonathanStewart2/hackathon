@@ -9,6 +9,8 @@ const cookieParser = require("cookie-parser")
 const passport = require('./auth.js');
 const logger = require('morgan');
 const path = require('path');
+const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jsonwebtoken');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,6 +27,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(logger('dev'));
+app.use(express.json());
 
 
 // LOGGER

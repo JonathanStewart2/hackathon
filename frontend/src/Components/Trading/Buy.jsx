@@ -3,42 +3,60 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Container, Col, Row, Form, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Buy = () => {
+    const navigate = useNavigate();
     const { id } = useParams();
-    const [request, setRequest] = useState([]);
-    const [fiat, setFiat] = useState("");
-    const [crypto, setCrypto] = useState("");
-    const [conversion, setConversion] = useState("");
+    const [request, setRequest] = useState([{symbol: "ETH", name: "Ethereum", price:"2000"}]);
+    const [fiat, setFiat] = useState("0");
+    const [crypto, setCrypto] = useState("0");
 
-    useEffect(() => {
-        const getCrypto = async () => {
-            const res = await axios.get(`http://localhost:4417/api/search/${id}`);
-            console.log(res);
-            const data = res.data;
-            let requestedCrypto = [{
-                 symbol: data[0].asset_id,
-                 name: data[0].name,
-                 price: data[0].price_usd
-                 }]
-             setRequest(requestedCrypto);
-        };
-    getCrypto();
-    }, [id]);
+    // useEffect(() => {
+    //     const getCrypto = async () => {
+    //         console.log(id)
+    //         const res = await axios.get(`http://localhost:4417/api/search/${id}`);
+    //         console.log(res);
+    //         const data = res.data;
+    //         let requestedCrypto = [{
+    //              symbol: data[0].asset_id,
+    //              name: data[0].name,
+    //              price: data[0].price_usd
+    //              }]
+    //          setRequest(requestedCrypto);
+    //     };
+    // getCrypto();
+    // }, [id]);
 
     const formHandler1 = (e) => {
-        setCrypto(e.target.value);
+        let cryptoAmount = parseFloat(e.target.value)
+        setCrypto(cryptoAmount);
+        let cryptoValue = parseInt(request[0].price)
+        setFiat(cryptoAmount * cryptoValue)
     }
 
     const formHandler2 = (e) => {
-        setFiat(e.target.value);
+        setFiat(parseFloat(e.target.value));
+        setCrypto(parseFloat(e.target.value) / parseInt(request[0].price))
     }
 
-    return (
+    const placeOrder = () => {
+        let purchasedCrypto = {
+            _id: request[0].symbol,
+            name: request[0].name,
+            crypto: crypto
+        }
+
+        axios.post('http://localhost:4417/addCrypto', purchasedCrypto)
+        .then(response => console.log(response));
+        navigate("/portfolio");
+    }
+
+    return request && (
            
         <Container>
             <Row xs={'auto'} md={'auto'} className="g-4">
-            <Card border="primary" style={{ width: '10rem' }}>
+            <Card border="primary" style={{ width: '18rem' }}>
                 <Card.Body>
                     <Card.Title>{request[0].symbol}</Card.Title>
                     <Card.Subtitle>{request[0].name}</Card.Subtitle>
@@ -46,14 +64,15 @@ const Buy = () => {
                 </Card.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="formAmount" onChange={formHandler1}>
-                        <Form.Label>Amount to buy</Form.Label>
-                        <Form.Control type="number" placeholder="0.00" />
+                        <Form.Label>{id} to buy</Form.Label>
+                        <Form.Control type="number" placeholder={crypto} />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formAmount" onChange={formHandler2}>
-                        <Form.Label>Amount to buy</Form.Label>
-                        <Form.Control type="number" placeholder="0.00" />
+                        <Form.Label>Amount to pay ($)</Form.Label>
+                        <Form.Control type="number" placeholder={fiat} />
                     </Form.Group>
                 </Form>
+                <Button variant="primary" onClick={placeOrder}>Buy</Button>
             </Card>
             </Row>
         </Container>

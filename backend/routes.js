@@ -4,39 +4,73 @@ const { PortfolioModel, UserModel } = require('./database/schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
-const passport = require('./auth.js')
+//const passport = require('./auth.js')
 const createError = require('http-errors');
+const { login, register } = require('./services.js');
+const passport = require('passport');
+const bcrypto = require('bcrypt');
+
+// AUTHENTICATION ATTEMPT 1
+// const isAuthenticated = (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         return next(createError.Unauthorized('Login failed'));
+//     }
+//     return next();
+// }
+
+// router.get('/getAll', isAuthenticated, (req, res, next) => {
+//     const user = req.body
+//     UserModel.find({ user })
+//         .then(results => res.send(results))
+//         .catch(err => next(err))
+
+//     // UserModel.find((err,user) => {
+//     //     if (err) return next(err);
+//     //     return res.json(user);
+//     // });
+// })
+
+// router.post('/register', async ({ body }, res, next) => {
+//     UserModel.create(body)
+//         .then(results => res.status(201).send(results))
+//         .catch(err => next(err))
+// });
+
+// router.post('/login', passport.authenticate('local'), (req, res) => {
+//     console.log("FIRST: ", req)
+//     res.send();
+// })
 
 
-// AUTHENTICATION
-const isAuthenticated = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        return next(createError.Unauthorized('Login failed'));
-    }
-    return next();
-}
+// AUTHORISATION ATTEMPT 2
+// router.post('/login', passport.authenticate('local'), login);
 
-router.get('/getAll', isAuthenticated, (req, res, next) => {
-    const user = req.body
-    UserModel.find({ user })
-        .then(results => res.send(results))
-        .catch(err => next(err))
+// router.post('/register', register);
 
-    // UserModel.find((err,user) => {
-    //     if (err) return next(err);
-    //     return res.json(user);
-    // });
-})
 
+// CUSTOM AUTHENTICATION
 router.post('/register', async ({ body }, res, next) => {
     UserModel.create(body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-    console.log("FIRST: ", req)
-    res.send();
+const authorise = (details, pw, res, next) => {
+    console.log(details)
+    const hashedPW = bcrypto.hashSync(pw, 12)
+    console.log(hashedPW)
+    if (hashedPW === details.password){
+        res.status(201).send(details.username)
+    } else {
+        res.send("Invalid password")
+    }
+}
+
+router.post('/login', async (req, res, next) => {
+    const username = req.body.username;
+    UserModel.find({ username })
+        .then(results => authorise(results, req.body.password))
+        .catch(err => next(err));
 })
 
 
@@ -110,7 +144,6 @@ router.get("/api/search/:id", async (req, res, next) => {
         {
             headers: { "X-CoinAPI-Key": `${process.env.COIN_API_KEY}` }
         })
-
         .then(results => res.status(201).send(JSON.stringify(results.data)))
         .catch(err => console.log(err))
 })
