@@ -7,7 +7,6 @@ import Nav from './Nav.jsx'
 
 const Portfolio = () => {
     const [portfolio, setPortfolio] = useState([]);
-    const [filter, setFilter] = useState("");
 
     useEffect(() => {
         const getPortfolio = async () => {

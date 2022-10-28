@@ -10,7 +10,7 @@ const createError = require('http-errors');
 
 // AUTHENTICATION
 const isAuthenticated = (req, res, next) => {
-    if (!req.isAuthenticated()){
+    if (!req.isAuthenticated()) {
         return next(createError.Unauthorized('Login failed'));
     }
     return next();
@@ -18,7 +18,7 @@ const isAuthenticated = (req, res, next) => {
 
 router.get('/getAll', isAuthenticated, (req, res, next) => {
     const user = req.body
-    UserModel.find({user})
+    UserModel.find({ user })
         .then(results => res.send(results))
         .catch(err => next(err))
 
@@ -28,15 +28,15 @@ router.get('/getAll', isAuthenticated, (req, res, next) => {
     // });
 })
 
-router.post('/register', async ({body}, res, next) => {
+router.post('/register', async ({ body }, res, next) => {
     UserModel.create(body)
         .then(results => res.status(201).send(results))
         .catch(err => next(err))
 });
 
-router.post('/login', passport.authenticate('local'), (req,res) => {
+router.post('/login', passport.authenticate('local'), (req, res) => {
     console.log("FIRST: ", req)
-    res.redirect('getAll');
+    res.send();
 })
 
 
@@ -59,7 +59,7 @@ router.get('/getPortfolio', (req, res, next) => {
 
 router.get('/getPortfolio/:id', (req, res, next) => {
     const _id = req.params.id;
-    PortfolioModel.find({_id})
+    PortfolioModel.find({ _id })
         .then(results => res.send(results))
         .catch(err => next(err))
 });
@@ -89,25 +89,37 @@ router.delete('/delete/:id', (req, res, next) => {
 
 // API FOR 16 CRYPTOS
 router.get("/api/search", async (req, res, next) => {
-        // SANDBOX
+    // SANDBOX
     //     await axios.get("https://rest-sandbox.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
     //     { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
     // })
-        
-        // PRODUCTION
-        await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX", 
-        { headers: {"X-CoinAPI-Key": `${process.env.COIN_API_KEY}`}
-    })
+
+    // PRODUCTION
+    await axios.get("https://rest.coinapi.io/v1/assets?filter_asset_id=BTC;ETH;SOL;USDT;XRP;BNB;MATIC;LRC;DOT;DOGE;LTC;LINK;IMX;SNX,GRT;AVAX",
+        {
+            headers: { "X-CoinAPI-Key": `${process.env.COIN_API_KEY}` }
+        })
+
+        .then(results => res.status(201).send(JSON.stringify(results.data)))
+        .catch(err => console.log(err))
+})
+
+router.get("/api/search/:id", async (req, res, next) => {
+    const id = req.params.id;
+    await axios.get(`https://rest.coinapi.io/v1/assets?filter_asset_id=${id}`,
+        {
+            headers: { "X-CoinAPI-Key": `${process.env.COIN_API_KEY}` }
+        })
 
         .then(results => res.status(201).send(JSON.stringify(results.data)))
         .catch(err => console.log(err))
 })
 
 // API FOR CRYPTO NEWS ->  NEWSAPI
-router.get("/news", async (req,res,next) => {
+router.get("/news", async (req, res, next) => {
     await axios.get(`https://newsapi.org/v2/everything?q=bitcoin&ethereum&crypto&apiKey=${process.env.NEWS_2_API}`)
-    .then(results => res.status(201).send(JSON.stringify(results.data)))
-    .catch(err => console.log(err))
+        .then(results => res.status(201).send(JSON.stringify(results.data)))
+        .catch(err => console.log(err))
 })
 
 

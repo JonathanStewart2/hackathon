@@ -1,4 +1,3 @@
-import NavLogo from '../imgs/logo-nav.png'
 import { useState } from 'react'
 import Form from './Form.jsx';
 import { Button } from 'react-bootstrap';

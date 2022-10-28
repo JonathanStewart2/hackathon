@@ -27,20 +27,22 @@ function App() {
       <Router>
         <nav className="navBar">
           <table width="90%">
-            <tr>
-              <th><Link to="/"><img src={NavLogo} alt="CryptoBytes Logo"/></Link></th>
-              <th>  
-                <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
-                <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
-                <Link to="/news"><Button variant="outline-info" type="button">News</Button></Link>
-              </th>
-              <th>
-              <Link to="/login"><Button variant="outline-light" type="button">Log In</Button></Link>
-              </th>
-            </tr>
+            <tbody>
+              <tr>
+                <th><Link to="/"><img src={NavLogo} alt="CryptoBytes Logo" /></Link></th>
+                <th>
+                  <Link to="/portfolio"><Button variant="outline-primary" type="button">Portfolio</Button></Link>
+                  <Link to="/trading"><Button variant="outline-success" type="button">Trading</Button></Link>
+                  <Link to="/news"><Button variant="outline-info" type="button">News</Button></Link>
+                </th>
+                <th>
+                  <Link to="/login"><Button variant="outline-light" type="button">Log In</Button></Link>
+                </th>
+              </tr>
+            </tbody>
           </table>
-          
-         </nav>
+
+        </nav>
         <div className="contentDiv">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -52,6 +54,7 @@ function App() {
             <Route path="/portfolio/search/:id" element={<SearchPortfolio />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/trading/buy/:id" element={<Buy />} />
+            <Route path="/trading/search/buy/:id" element={<Buy />} />
             <Route path="/trading/search/:id" element={<Search />} />
             <Route path="/addcrypto" element={<AddCrypto />} />
             <Route path="/news" element={<News />} />

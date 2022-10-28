@@ -25,7 +25,7 @@ const Search = () => {
              setItem(newCrypto);
         };
     getPortfolioItem();
-    }, []);
+    }, [id]);
 
   return (
     <>
