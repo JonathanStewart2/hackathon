@@ -8,71 +8,14 @@ require('dotenv').config();
 const createError = require('http-errors');
 const { login, register } = require('./services.js');
 const passport = require('passport');
-const bcrypto = require('bcrypt');
-
-// AUTHENTICATION ATTEMPT 1
-// const isAuthenticated = (req, res, next) => {
-//     if (!req.isAuthenticated()) {
-//         return next(createError.Unauthorized('Login failed'));
-//     }
-//     return next();
-// }
-
-// router.get('/getAll', isAuthenticated, (req, res, next) => {
-//     const user = req.body
-//     UserModel.find({ user })
-//         .then(results => res.send(results))
-//         .catch(err => next(err))
-
-//     // UserModel.find((err,user) => {
-//     //     if (err) return next(err);
-//     //     return res.json(user);
-//     // });
-// })
-
-// router.post('/register', async ({ body }, res, next) => {
-//     UserModel.create(body)
-//         .then(results => res.status(201).send(results))
-//         .catch(err => next(err))
-// });
-
-// router.post('/login', passport.authenticate('local'), (req, res) => {
-//     console.log("FIRST: ", req)
-//     res.send();
-// })
+//const bcrypt = require('bcrypt');
+//const { ExtractJwt } = require('passport-jwt');
 
 
-// AUTHORISATION ATTEMPT 2
-router.post('/login', passport.authenticate('local'), login);
+// AUTH
+// router.post('/login', passport.authenticate('local'), login);
 
-router.post('/register', register);
-
-
-// CUSTOM AUTHENTICATION
-// router.post('/register', async ({ body }, res, next) => {
-//     UserModel.create(body)
-//         .then(results => res.status(201).send(results))
-//         .catch(err => next(err))
-// });
-
-// const authorise = (details, pw, res, next) => {
-//     console.log(details)
-//     const hashedPW = bcrypto.hashSync(pw, 12)
-//     console.log(hashedPW)
-//     if (hashedPW === details.password){
-//         res.status(201).send(details.username)
-//     } else {
-//         res.send("Invalid password")
-//     }
-// }
-
-// router.post('/login', async (req, res, next) => {
-//     const username = req.body.username;
-//     UserModel.find({ username })
-//         .then(results => authorise(results, req.body.password))
-//         .catch(err => next(err));
-// })
-
+// router.post('/register', register);
 
 
 
@@ -157,3 +100,116 @@ router.get("/news", async (req, res, next) => {
 
 
 module.exports = router;
+
+
+
+
+// ATTEMPTS TO AUTHORISATIOn
+// AUTHENTICATION ATTEMPT 1
+// const isAuthenticated = (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         return next(createError.Unauthorized('Login failed'));
+//     }
+//     return next();
+// }
+
+// router.get('/getAll', isAuthenticated, (req, res, next) => {
+//     const user = req.body
+//     UserModel.find({ user })
+//         .then(results => res.send(results))
+//         .catch(err => next(err))
+
+//     // UserModel.find((err,user) => {
+//     //     if (err) return next(err);
+//     //     return res.json(user);
+//     // });
+// })
+
+// router.post('/register', async ({ body }, res, next) => {
+//     UserModel.create(body)
+//         .then(results => res.status(201).send(results))
+//         .catch(err => next(err))
+// });
+
+// router.post('/login', passport.authenticate('local'), (req, res) => {
+//     console.log("FIRST: ", req)
+//     res.send();
+// })
+
+
+// AUTHORISATION ATTEMPT 2
+// router.post('/login', passport.authenticate('local'), login);
+
+// router.post('/register', register);
+
+
+// CUSTOM AUTHENTICATION
+// router.post('/register', async (req, res) => {
+//     const user = req.body;
+//     const takenUserName = await UserModel.find({username: user.username})
+//     const takenEmail = await UserModel.find({email: user.email})
+
+//     if (takenUserName || takenEmail ) {
+//         res.json({message: "Username or Email has already been taken"})
+//     } else {
+//         user.password = await bcrypto.hash(req.body.password, 12)
+//     }
+//     UserModel.create({
+//         username: user.username.toLowerCase(),
+//         email: user.email.toLowerCase(),
+//         password: user.password
+//     })
+//     res.json({message: "User successfully registered"})
+// });
+
+// router.post('/login', (req, res) => {
+//     const logInRequest = req.body;
+//     UserModel.find({ username: logInRequest.username })
+//         .then(dbUser => {
+//             if (!dbUser){
+//                 return res.json({message: "Invalid username or password"})
+//             }
+//             bcrypt.compare(logInRequest.password, dbUser.password)
+//             .then(confirmed => {
+//                 if (confirmed) {
+//                 const payLoad = {
+//                     id: dbUser._id,
+//                     username: dbUser.username
+//                 }
+//                 jwt.sign(
+//                     payload,
+//                     process.env.JWT_SECRET,
+//                     {expiresIn: 86400},
+//                     (err, token) => {
+//                         if (err) {
+//                           return res.json({message: "nope"})
+//                         } else {
+//                         return res.json({
+//                             message: "success",
+//                             token: "Bearer " + token
+//                             })
+//                         }
+//                     })
+//             } else {
+//                 return res.json({message: "Invalid username or password"})
+//         }
+//     })
+// });
+
+// const authorise = (details, pw, res, next) => {
+//     console.log(details)
+//     const hashedPW = bcrypto.hashSync(pw, 12)
+//     console.log(hashedPW)
+//     if (hashedPW === details.password){
+//         res.status(201).send(details.username)
+//     } else {
+//         res.send("Invalid password")
+//     }
+// }
+
+// router.post('/login', async (req, res, next) => {
+//     const username = req.body.username;
+//     UserModel.find({ username })
+//         .then(results => authorise(results, req.body.password))
+//         .catch(err => next(err));
+// })

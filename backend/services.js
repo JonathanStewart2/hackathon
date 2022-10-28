@@ -1,4 +1,4 @@
-const User = require('./database/schema');
+const UserModel = require('./database/schema');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -10,7 +10,7 @@ const services = {
         res.send(token);
     },
     register: function (req, res) {
-        User.register(new User({ username: req.body.username, email: req.body.email }), req.body.password, function (err, user) {
+        UserModel.register(new User({ username: req.body.username, email: req.body.email }), req.body.password, function (err, user) {
             if (err) {
                 return res.status(500).send(err.message);
             }
