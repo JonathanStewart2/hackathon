@@ -4,18 +4,18 @@ const { PortfolioModel, UserModel } = require('./database/schema.js');
 const router = require("express").Router();
 const axios = require("axios");
 require('dotenv').config();
-//const passport = require('./auth.js')
+const passport = require('./auth.js')
 const createError = require('http-errors');
 const { login, register } = require('./services.js');
 const passport = require('passport');
-//const bcrypt = require('bcrypt');
-//const { ExtractJwt } = require('passport-jwt');
+const bcrypt = require('bcrypt');
+const { ExtractJwt } = require('passport-jwt');
 
 
 // AUTH
-// router.post('/login', passport.authenticate('local'), login);
+router.post('/login', passport.authenticate('local'), login);
 
-// router.post('/register', register);
+router.post('/register', register);
 
 
 
