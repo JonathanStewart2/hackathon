@@ -1,0 +1,19 @@
+PORTFOLIO DATABASE PLANNING
+
+
+PORTFOLIO HOLDINGS
+symbol
+name
+amount
+value
+
+
+
+VALUE
+adding up values in Portfolio Holding DB
+maybe not needed....
+
+
+
+TRANSACTIONS
+Array of transactions?
