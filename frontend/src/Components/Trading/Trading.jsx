@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 const Trading = () => {
-    const [crypto, setCrypto] = useState([])
+    const [crypto, setCrypto] = useState([]);
     const [request, setRequest] = useState("");
 
     const changeHandler = (e) => {
@@ -15,47 +15,39 @@ const Trading = () => {
 
     useEffect(() => {
         const displayCrypto = async () => {
-            const res = await axios.get('http://localhost:4417/api/search');
-            console.log(res.data);
-            const data = res.data;
-
-            for (let i = 0; i < data.length; i++){
-                let newCrypto = {
-                    symbol: data[i].asset_id,
-                    name: data[i].name,
-                    price: parseFloat(data[i].price_usd).toFixed(5)
-                }
-                let cloneCrypto = crypto;
-                cloneCrypto.push(newCrypto);
-                setCrypto(cloneCrypto);
-            }
+            const { data } = await axios.get('http://localhost:4417/api/search');
+            let cloneCrypto = data.map(c => ({
+                symbol: c.asset_id,
+                name: c.name,
+                price: parseFloat(c.price_usd).toFixed(5)
+            }));
+            setCrypto(cloneCrypto);
         };
         displayCrypto();
-      }, []);
+    }, []);
 
 
-
-    return crypto && (
+    return (
         <div className="pageDiv">
             <input type="text" default="Crypto" value={request} onChange={changeHandler} />
-            <Link to={`trading/search/${request}`}><Button type="button">Crypto Search</Button></Link>
-            <br/>
+            <Link to={`./search/${request}`}><Button type="button">Crypto Search</Button></Link>
+            <br />
             <h4 className="heading4">Top Cryptocurrencies:</h4>
             <Container>
-              <Row xs={'auto'} md={'auto'} className="g-4">
-                {
-                    crypto.map((item) => (
-                        <Col>
-                            <Display
-                                symbol={item.symbol}
-                                name={item.name}
-                                price={item.price}
+                <Row xs={'auto'} md={'auto'} className="g-4">
+                    {
+                        crypto.map((item) => (
+                            <Col>
+                                <Display
+                                    symbol={item.symbol}
+                                    name={item.name}
+                                    price={item.price}
                                 />
-                        </Col>
-                    ))
-                }
-              </Row>
-          </Container>
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </Container>
         </div>
     )
 }

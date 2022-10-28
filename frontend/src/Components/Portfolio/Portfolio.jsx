@@ -9,37 +9,36 @@ const Portfolio = () => {
     const [portfolio, setPortfolio] = useState([]);
 
     useEffect(() => {
-        console.log('Loaded');
-        setPortfolio([])
         const getPortfolio = async () => {
             const response = await axios.get('http://localhost:4417/getPortfolio');
             const data = response.data;
-
+            let clonePortfolio = [];
             for (let i = 0; i < data.length; i++){
                 let newCrypto = {
                     symbol: data[i]._id,
                     name: data[i].name,
                     crypto: data[i].crypto
                 }
-                let clonePortfolio = portfolio;
+
                 clonePortfolio.push(newCrypto);
-                setPortfolio(clonePortfolio);
+                
             }
+            setPortfolio(clonePortfolio);
         };
     getPortfolio();
     }, []);
 
 
-    return (
+    return portfolio && (
         <div>
-            <Nav />
+            <Nav />      
             <br />
             <Container>
               <Row xs={'auto'} md={'auto'} className="g-4">
                 {
                     portfolio.map((item) => (
                         <Col>
-                            <Details
+                        <Details
                                 id={item.symbol}
                                 name={item.name}
                                 crypto={item.crypto}
