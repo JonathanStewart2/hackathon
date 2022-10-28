@@ -34,24 +34,23 @@ const Login = () => {
             password: password
         })
         .then(res => {
-            if (res.data) {
-                console.log("RES: ", res)
-                navigate("/");  
-            } else {
-                setStatus("Failed");   
-            }
             console.log("RES: ", res)
-            console.log("STATUS: ", status)
+            if (res.data === "Login failed") {
+                setStatus(res.data); 
+            } else {
+                setStatus(res.data); 
+                navigate("/");   
+            } 
         })
+        console.log("STATUS: ", status)
 
     }
 
     return (
         <>
-
         <Form formHandler={formHandler} handleUserName={handleUserName} handlePassword={handlePassword} />
         <Button variant="primary" type="button" onClick={submit}>Log In</Button>
-        {status}
+        <p>{status}</p>
         <div>
             <br />
             <p>Not got an account?</p>

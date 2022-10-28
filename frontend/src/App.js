@@ -10,6 +10,7 @@ import Portfolio from './Components/Portfolio/Portfolio.jsx'
 import Edit from './Components/Portfolio/Edit.jsx'
 import Remove from './Components/Portfolio/Remove.jsx'
 import AddCrypto from './Components/Portfolio/AddCrypto.jsx'
+import SearchPortfolio from './Components/Portfolio/Search.jsx'
 import Trading from './Components/Trading/Trading.jsx'
 import Buy from './Components/Trading/Buy.jsx'
 import Search from './Components/Trading/Search.jsx'
@@ -48,6 +49,7 @@ function App() {
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/portfolio/edit/:id" element={<Edit />} />
             <Route path="/portfolio/remove/:id" element={<Remove />} />
+            <Route path="/portfolio/search/:id" element={<SearchPortfolio />} />
             <Route path="/trading" element={<Trading />} />
             <Route path="/trading/buy/:id" element={<Buy />} />
             <Route path="/trading/search/:id" element={<Search />} />

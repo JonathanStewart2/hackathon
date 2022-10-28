@@ -17,17 +17,15 @@ const isAuthenticated = (req, res, next) => {
 }
 
 router.get('/getAll', isAuthenticated, (req, res, next) => {
-    console.log(req.body)
-    UserModel.find(req.body)
-    .then(results => res.send(results))
-    .catch(err => next(err))
+    // console.log(req.body)
+    // UserModel.find(req.body)
+    // .then(results => res.send(results))
+    // .catch(err => next(err))
 
-    // UserModel.find((err,users) => {
-    //     if (err) {
-    //         return next(err);
-    //     }
-    //     return res(users);
-    // })
+    UserModel.find((err,users) => {
+        if (err) return next(err);
+        return res.json(users);
+    });
 })
 
 router.post('/register', async ({body}, res, next) => {
@@ -74,7 +72,7 @@ router.get('/getPortfolio/:id', (req, res, next) => {
     PortfolioModel.find({_id})
         .then(results => res.send(results))
         .catch(err => next(err))
-})
+});
 
 // UPDATE -----------------------------------------
 router.patch("/updatePortfolio/:id", async (req, res, next) => {

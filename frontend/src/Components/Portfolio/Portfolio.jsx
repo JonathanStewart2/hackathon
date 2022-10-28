@@ -7,10 +7,9 @@ import Nav from './Nav.jsx'
 
 const Portfolio = () => {
     const [portfolio, setPortfolio] = useState([]);
+    const [filter, setFilter] = useState("");
 
     useEffect(() => {
-        console.log('Loaded');
-        //setPortfolio([])
         const getPortfolio = async () => {
             const response = await axios.get('http://localhost:4417/getPortfolio');
             const data = response.data;
@@ -33,14 +32,14 @@ const Portfolio = () => {
 
     return portfolio && (
         <div>
-            <Nav />
+            <Nav />      
             <br />
             <Container>
               <Row xs={'auto'} md={'auto'} className="g-4">
                 {
                     portfolio.map((item) => (
                         <Col>
-                            <Details
+                        <Details
                                 id={item.symbol}
                                 name={item.name}
                                 crypto={item.crypto}
